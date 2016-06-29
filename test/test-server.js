@@ -17,6 +17,12 @@ describe('Shopping List', function() {
             done();
         });
     });
+    
+    after(function(done) {
+        Item.remove(function() {
+            done();
+        });
+    });
 
 // describe('Shopping List', function() {
     it('should list items on GET', function(done) {
@@ -40,7 +46,7 @@ describe('Shopping List', function() {
     it('should add an item on POST', function(done) {
         chai.request(app)
             .post('/items')
-            .send({'name': 'Kale'})
+            .send({'name': 'Beef'})
             .end(function(err, response) {
                 should.equal(err, null);
                 response.should.have.status(201);
@@ -48,69 +54,45 @@ describe('Shopping List', function() {
                 response.body.should.be.a('object');
                 response.body.should.have.property('name');
                 response.body.name.should.be.a('string');
-                // response.body.name.should.equal('Kale');
-                // storage.items.should.be.a('array');
-                // storage.items.should.have.length(4);
-                // storage.items[3].should.be.a('object');
-                // storage.items[3].should.have.property('id');
-                // storage.items[3].should.have.property('name');
-                // storage.items[3].id.should.be.a('number');
-                // storage.items[3].name.should.be.a('string');
-                // storage.items[3].name.should.equal('Kale');
+                response.body.name.should.equal('Beef');
                 done();
             });
     });
     
-    // it('should edit an item on PUT',function(done) {
-    //     chai.request(app)
-    //         .put('/items/0')
-    //         .send({'name':'Cheesy Poofs'})      // new data at items[0]:Cheesy Poofs
-    //         .end(function(err,response) {
-    //             response.should.have.status(201);
-    //             response.should.be.json;
-    //             response.body.should.be.a('object');
-    //             response.body.should.have.property('name');
-    //             response.body.should.have.property('id');
-    //             response.body.name.should.be.a('string');
-    //             response.body.id.should.be.a('number');
-    //             response.body.name.should.equal('Cheesy Poofs');
-    //             // storage.items[0].should.be.a('object');
-    //             // storage.items[0].should.have.property('id');
-    //             // storage.items[0].should.have.property('name');
-    //             // storage.items[0].id.should.be.a('number');
-    //             // storage.items[0].name.should.be.a('string');
-    //             // storage.items[0].name.should.equal('Cheesy Poofs');
-    //             done();
-    //         });
-    // });
-    
-    // it('should delete an item on DELETE',function(done) {
-    //     chai.request(app)
-    //         .delete('/items/1')
-    //         .send({'name':'Tomatoes'})     // data to be deleted - itemm[1]: Tomatoes
-    //         .end(function(err,response){
-    //             should.equal(err, null);  
-    //             response.should.have.status(201);
-    //             response.should.be.json;
-    //             response.body.should.be.a('object');
-    //             response.body.should.have.property('name');
-    //             response.body.should.have.property('id');
-    //             response.body.name.should.be.a('string');
-    //             response.body.id.should.be.a('number');
-    //             // storage.items.should.be.a('array');
-    //             // storage.items.should.have.length(3);            // this must be before the delete, so 
-    //             // storage.items[1].should.be.a('object');
-    //             // storage.items[1].should.have.property('id');
-    //             // storage.items[1].should.have.property('name');
-    //             response.body.name.should.equal(1);
-    //             response.body.name.should.equal('Tomatoes');
-    //             done();
-    //         });
-    // }); 
-    
-    after(function(done) {
-        Item.remove(function() {
-            done();
-        });
+    it('should edit an item on PUT',function(done) {
+        chai.request(app)
+            .put('/items/0')
+            .send({'id':app.params.id,'name':'Venison'})      // new data at items[0]:Broad beans
+            .end(function(err,response) {
+                response.should.have.status(200);
+                response.should.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('name');
+                response.body.name.should.be.a('string');
+                // response.body.name.should.equal('Venison');
+                done();
+            });
     });
+    
+    it('should delete an item on DELETE',function(done) {
+        chai.request(app)
+            .delete('/items/1')
+            .send({'name':'Broad beans'})     // the data to be deleted - item[1]: Broad beans
+            .end(function(err,response){
+                should.equal(err, null);  
+                response.should.have.status(200);
+                response.should.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('name');
+                response.body.name.should.be.a('string');
+                response.body.name.should.equal('Broad beans');
+                done();
+            });
+    }); 
+    
+
+    
+
+    
+
 });

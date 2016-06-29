@@ -30,8 +30,8 @@ exports.delete = function (id, callback, errback) {
     });
 };
 
-exports.update = function (id, name, callback, errback) {
-    Item.findByIdAndUpdate(id, { name: name }, { new: true }, function(err, item) {
+exports.update = function (id, name, option, callback, errback) {
+    Item.findOneAndUpdate({id:id}, { name: name }, {new: true }, function(err, item) {
         if (err) {
             errback(err);
             return;
