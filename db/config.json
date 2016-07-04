@@ -1,6 +1,6 @@
 {
     "production": {
-        "url": "mongodb://jberthiaume1138:<dbpassword>@ds023684.mlab.com:23684/thinkful-shopping-list"
+        "url": "mongodb://dbworker:H0d0r!@ds023684.mlab.com:23684/thinkful-shopping-list"
     },
     "test": {
         "url": "mongodb://localhost/shopping-list-test"
