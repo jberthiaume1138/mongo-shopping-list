@@ -6,6 +6,6 @@
        "url": "mongodb://dbworker:H0d0r!@ds011765.mlab.com:11765/shopping-list-test"
     },
     "development": {
-        "url": "mongodb://localhost/shopping-list-dev"
+        "url": "mongodb://dbworker:H0d0r!@ds011755.mlab.com:11755/shopping-list-dev"
     }
 }
