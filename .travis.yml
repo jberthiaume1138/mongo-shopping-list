@@ -8,3 +8,10 @@ addons:
     - mongodb-3.2-precise
     packages:
     - mongodb-org-server
+deploy:
+  provider: heroku
+  api_key:
+    secure: AtCFtqTMymXunKsGn9dMtQ7s17dDqJSdCxZzq/VTrvJLc1iF3igbigqaIr1v6kvGAZ9nKCQEswplvyqKprHffXY78N9N6LvdC6R5uuZQ9PE0aJopVBP478gzDGylgm/rykDdeiDZsIOBv0uZUvhWO9niY3kEwUatY+Y4O+5u7Yi9zoEjx3+nfOBvRvNrwyRhCMPuznfgyLg59w5Ss7xlmxiu95Mbnbx7q4s2IIx6p4X+U5eie7EwD4AqbCioFaQM+7iPLB/yJoVj9mfVVaHdL/PQLGat61SkNHn5dpiJ/KMwjEpRDDapchBvw3v/6L0VdXdoON0RJzZ2nt7l8W9rIc7rIDKEy9XTdb0ftLr1waH/3lDo5z2sGBgZ7gUtDZzqYmhpq8yK7FYwc9L6dkh9kjtODjJWH8auWVpp4WSAvE+vGYE4heriUjp9gQbw01+yuzdEhf+BMoApAojOgWosjnn37kARXeunVquAh4BMmVALTHCzAey3HAgN3YF4k27S2h2MfiVvtIOuGlfoNl9UmIM7eA6saf0TTM0E/k8EYaGrwWOfG/qDtTsrwoGtG34m2hUD5ffmoycHpuVNzUWGGn/CcKaoSft5Q++8ATlha9NMSVWfjR9QIUboKI99BgisVWYV1I7R3bP1a5CpXPNkbQOfBIxINTrMwaxB/RWNdSs=
+  app: frozen-beach-26945
+  on:
+    repo: jberthiaume1138/mongo-shopping-list
