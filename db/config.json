@@ -3,7 +3,7 @@
         "url": "mongodb://dbworker:H0d0r!@ds023684.mlab.com:23684/thinkful-shopping-list"
     },
     "test": {
-        "url": "mongodb://localhost/shopping-list-test"
+       "url": "mongodb://dbworker:H0d0r!@ds011765.mlab.com:11765/shopping-list-test"
     },
     "development": {
         "url": "mongodb://localhost/shopping-list-dev"
