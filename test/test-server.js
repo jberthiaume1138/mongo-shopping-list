@@ -24,7 +24,6 @@ describe('Shopping List', function() {
         });
     });
 
-// describe('Shopping List', function() {
     it('should list items on GET', function(done) {
         chai.request(app)
             .get('/items')
