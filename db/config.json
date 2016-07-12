@@ -1,6 +1,6 @@
 {
     "production": {
-        "url": " mongodb://heroku_tljdztkg:@ds045622.mlab.com:45622/heroku_tljdztkg"
+        "url": "mongodb://herokuworker:H0d0r!@ds045622.mlab.com:45622/heroku_tljdztkg"
     },
     "test": {
        "url": "mongodb://dbworker:H0d0r!@ds011765.mlab.com:11765/shopping-list-test"
