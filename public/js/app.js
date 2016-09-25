@@ -1,4 +1,15 @@
 'use strict'
+
+var ShoppingList = function() {
+	// define properties
+};
+
+ShoppingList.prototype.getItems = function() {
+	// ajax calls to my api
+	// returns the JSON of the items
+};
+
+
 $(document).ready(function() {
 	$('#button-add').on("click",function() {
 		var newItem = $('#input-item').val().trim(); // basic input validation
@@ -6,8 +17,8 @@ $(document).ready(function() {
 			addItem(newItem);	// input is valid, proceed
 			$('#no-input').hide();
 			$('#input-item').val(""); //clear out box for next item
-		}	
-		else 		
+		}
+		else
 			$('#no-input').show();
 	});
 

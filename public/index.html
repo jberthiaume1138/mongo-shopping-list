@@ -1,214 +1,95 @@
-<html>
-    <head>
-        <title>Shopping List</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Shopping List</title>
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Oswald:300,400' rel='stylesheet' type='text/css'>
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+</head>
+<body>
 
-        <!-- JS -->
-        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js"></script>
+<header>
+	<div>
+		<img src="images/zombie.png" alt="zombie" height="64" width="64">
+		<h1>Shopping List</h1>
+		<img src="images/cart.jpg" alt="shopping-cart" height="64" width="64">
+	</div>
+	<div>
+		<h2>Helping you stock up for the zombie apocalypse, since 2016</h2>
+	</div>
+</header>
+
+<section id="input-section">
+	<input type="text" id="input-item" autofocus="autofocus" title="Enter an item, then click add."></input>
+	<button id="button-add">Add</button>
+	<p id="no-input">You must enter an item in the box!</p>
+</section>
+
+<section id="list-section">
+	<div>
+		<ul id="list">
+			<li class="list-item">
+				<img class="check" src="images/checkbox.gif" height="16" width="16">
+				<p>Cheesey Poofs</p>
+				<img class="remove" src="images/remove-x.gif" height="16" width="16">
+			</li>
+			<li class="list-item">
+				<img class="check" src="images/checkbox.gif" height="16" width="16">
+				<p>Chainsaw oil</p>
+				<img class="remove" src="images/remove-x.gif" height="16" width="16">
+			</li>
+			<li class="list-item">
+				<img class="check" src="images/checkbox.gif" height="16" width="16">
+				<p>Shotgun shells</p>
+				<img class="remove" src="images/remove-x.gif" height="16" width="16">
+			</li>
+			<li class="list-item">
+				<img class="check" src="images/checkbox.gif" height="16" width="16">
+				<p>Beef-a-roni</p>
+				<img class="remove" src="images/remove-x.gif" height="16" width="16">
+			</li>
+			<li class="list-item">
+				<img class="check" src="images/checkbox.gif" height="16" width="16">
+				<p>Twinkies</p>
+				<img class="remove" src="images/remove-x.gif" height="16" width="16">
+			</li>
+		</ul>
+	</div>
+</section>
+
+<!-- Handlebars templates -->
+<script id="item-list-template" type="text/x-handlebars-template">
+	<ul id="list">
+		{{#each items}}
+			<li class="list-item">
+				<img class="check" src="images/checkbox.gif" height="16" width="16">
+				<p>{{item}}</p>
+				<img class="remove" src="images/remove-x.gif" height="16" width="16">
+			</li>
+		{{/each}}
+	</li>
+</script>
 
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
-        <style>
-* {
-    box-sizing: border-box;
-}
-body {
-    font-size: 2em;
-    color: #1E2835;
-    background-color: #F8F8F8;
-}
-.light {
-    color: #C7CACD;
-}
-a, a:active, a:hover, a:visited {
-    color: #F37A7B;
-}
-div#main {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-input {
-    width: 400px;
-    border: 0;
-    background-color: #F8F8F8;
-}
-div>input {
-    width: 400px;
-}
-li input {
-    width: 380;
-}
-div>input, li {
-    border: 2px solid #C7CACD;
-    padding: 10px;
-}
-form, ul {
-    margin: 0;
-}
-ul {
-    padding-left: 0;
-}
-li {
-    width: 400px;
-    list-style-type: none;
-}
-div.delete {
-    float: right;
-}
-        </style>
 
-        <script>
-var ShoppingList = function() {
-    this.items = [];
-    this.itemList = $('#item-list');
-    this.itemListTemplate = Handlebars.compile($("#item-list-template").html());
-    this.input = $('#item-input');
-    this.input.keydown(this.onAddInputKeydown.bind(this));
-    this.main = $('#main');
-    this.main.on('dblclick', 'li',
-                 this.onEditItemClicked.bind(this));
-    this.main.on('keydown', 'li input',
-                 this.onEditInputKeydown.bind(this));
-    this.main.on('focusout', 'li input',
-                 this.onEditFocusOut.bind(this));
-    this.main.on('click', 'li .delete-item',
-                 this.onDeleteItemClicked.bind(this));
-    this.getItems();
-};
-ShoppingList.prototype.onAddInputKeydown = function(event) {
-    if (event.which != 13) {
-        return;
-    }
-    var input = $(event.target);
-    var value = input.val().trim();
-    if (value != '') {
-        this.addItem(value);
-    }
-    input.val('');
-    event.preventDefault();
-};
-ShoppingList.prototype.onEditItemClicked = function(event) {
-    var item = $(event.target).parents('li');
-    var display = item.children('.display');
-    var input = item.children('input');
-    var name = display.children('.name');
-    input.show();
-    input.focus();
-    input.val(name.text());
-    display.hide();
-    event.preventDefault();
-};
-ShoppingList.prototype.onEditInputKeydown = function(event) {
-    if (event.which != 13) {
-        return;
-    }
-    var input = $(event.target);
-    input.blur();
-};
-ShoppingList.prototype.onEditFocusOut = function(event) {
-    var item = $(event.target).parents('li');
-    var id = item.data('id');
-    var display = item.children('.display');
-    var input = item.children('input');
-    var name = display.children('.name');
-    var value = input.val().trim();
-    if (value != '') {
-        this.editItem(id, value);
-        name.text(value);
-    }
-    input.hide();
-    display.show();
-    event.preventDefault();
-};
-ShoppingList.prototype.onDeleteItemClicked = function(event) {
-    var id = $(event.target).parents('li').data('id');
-    this.deleteItem(id);
-};
-ShoppingList.prototype.getItems = function() {
-    var ajax = $.ajax('/items', {
-        type: 'GET',
-        dataType: 'json'
-    });
-    ajax.done(this.onGetItemsDone.bind(this));
-};
-ShoppingList.prototype.addItem = function(name) {
-    var item = {'name': name};
-    var ajax = $.ajax('/items', {
-        type: 'POST',
-        data: JSON.stringify(item),
-        dataType: 'json',
-        contentType: 'application/json'
-    });
-    ajax.done(this.getItems.bind(this));
-};
-ShoppingList.prototype.deleteItem = function(id) {
-    var ajax = $.ajax('/items/' + id, {
-        type: 'DELETE',
-        dataType: 'json'
-    });
-    ajax.done(this.getItems.bind(this));
-};
-ShoppingList.prototype.editItem = function(id, name) {
-    var item = {'name': name, 'id': id};
-    var ajax = $.ajax('/items/' + id, {
-        type: 'PUT',
-        data: JSON.stringify(item),
-        dataType: 'json',
-        contentType: 'application/json'
-    });
-    ajax.done(this.getItems.bind(this));
-};
-ShoppingList.prototype.onGetItemsDone = function(items) {
-    this.items = items;
-    this.updateItemsView();
-};
-ShoppingList.prototype.updateItemsView = function() {
-    var context = {
-        items: this.items
-    };
-    var itemList = $(this.itemListTemplate(context));
-    this.itemList.replaceWith(itemList);
-    this.itemList = itemList;
-};
-$(document).ready(function() {
-    var app = new ShoppingList();
-});
-        </script>
-    </head>
-    <body>
-        <div id="main">
-            <h1>Zombie Shopping List</h1>
-            <input type="text" placeholder="Add an item" id="item-input"
-                autocomplete="off" autofocus>
-            <ul id="item-list">
-            </ul>
-            <p class="light">Double-click to edit items</p>
-        </div>
+<footer>
+	<div id="clear">
+		<p>Click here to clear the list and start over</p>
+		<button type="button" id="button-clear">Clear</button>
+	</div>
+	<div id="confirm">
+		<p>Are you sure you want to clear the list? This cannot be undone.</p>
+		<button type="button" id="button-confirm">Clear</button>
+		<button type="button" id="button-cancel">Cancel</button>
+	</div>
+</footer>
 
-        <!-- Handlebars templates -->
-        <script id="item-list-template" type="text/x-handlebars-template">
-            <ul id="item-list">
-                {{#each items}}
-                <li data-id="{{ id }}{{ _id }}">
-                    <div class="display">
-                        <span class="name">{{name}}</span>
-                        <div class="delete">
-                            <a href="#" class="delete-item">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <input type="text" style="display: none">
-                </li>
-                {{/each}}
-            </ul>
-        </script>
 
-    </body>
+<script src="js/app.js"></script>
+</body>
 </html>
