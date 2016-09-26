@@ -20,8 +20,20 @@ TodoList.prototype.getItems = function() {
 		.done(this.processData.bind(this));
 };
 
-TodoList.prototype.addItem = function() {
+TodoList.prototype.addItem = function(name) {
+	var item = {'name': name};
 
+	$.ajax('/items', {
+			type:'POST',
+			data: JSON.stringify(item),
+			dataType: 'json',
+			contentType: 'application/json'
+		})
+		.fail(function(error){
+			console.log('Failed to add the item.');
+			console.log(error);
+		})
+		.done(this.getItems.bind(this));
 };
 
 TodoList.prototype.updateItem = function() {
@@ -33,51 +45,38 @@ TodoList.prototype.deleteItem = function() {
 };
 
 TodoList.prototype.processData = function(data) {
-	// console.log(data);
 	this.data = data;
 	this.updateItemsView();
 };
 
 TodoList.prototype.updateItemsView = function() {
-	// console.log(this.data);
-
 	var source = $('#item-list-template').html();
 	var template = Handlebars.compile(source);
-
-	// var items = this.data;
-	// console.log(items[0]);
-	// var context = items;
 
 	var context = {
         items: this.data
     };
 
-	console.log(context);
-
-
-	// console.log(context[0]);
 	var html = template(context);
 
 	$('#list-section').html(html);
 };
 
 
-
 $(document).ready(function() {
 	var list = new TodoList();
 	list.getItems();
 
-
-
-	$('#button-add').on("click",function() {
-		var newItem = $('#input-item').val().trim(); // basic input validation
+	$('#button-add').on('click',function() {
+		var newItem = $('#input-item').val().trim();
 		if (newItem.length > 0) {
-			addItem(newItem);	// input is valid, proceed
+			list.addItem(newItem);
 			$('#no-input').hide();
-			$('#input-item').val(""); //clear out box for next item
+			$('#input-item').val('');
 		}
-		else
+		else {
 			$('#no-input').show();
+		}
 	});
 
 	// enable use of enter key to add an item
