@@ -1,16 +1,74 @@
 'use strict'
 
-var ShoppingList = function() {
-	// define properties
+var TodoList = function() {
+	this.items = [];
+	this.data;
 };
 
-ShoppingList.prototype.getItems = function() {
-	// ajax calls to my api
-	// returns the JSON of the items
+TodoList.prototype.getItems = function() {
+	$.getJSON('/items')
+		.fail(function(error) {
+			console.log('Error reading data.');
+			console.log(error);
+		})
+		// .done(function(data) {
+		// 	console.log(this);
+		// 	console.log(data);
+		// 	return(data);
+		// 	// processData(data).bind(this)
+		// });
+		.done(this.processData.bind(this));
 };
+
+TodoList.prototype.addItem = function() {
+
+};
+
+TodoList.prototype.updateItem = function() {
+
+};
+
+TodoList.prototype.deleteItem = function() {
+
+};
+
+TodoList.prototype.processData = function(data) {
+	// console.log(data);
+	this.data = data;
+	this.updateItemsView();
+};
+
+TodoList.prototype.updateItemsView = function() {
+	// console.log(this.data);
+
+	var source = $('#item-list-template').html();
+	var template = Handlebars.compile(source);
+
+	// var items = this.data;
+	// console.log(items[0]);
+	// var context = items;
+
+	var context = {
+        items: this.data
+    };
+
+	console.log(context);
+
+
+	// console.log(context[0]);
+	var html = template(context);
+
+	$('#list-section').html(html);
+};
+
 
 
 $(document).ready(function() {
+	var list = new TodoList();
+	list.getItems();
+
+
+
 	$('#button-add').on("click",function() {
 		var newItem = $('#input-item').val().trim(); // basic input validation
 		if (newItem.length > 0) {

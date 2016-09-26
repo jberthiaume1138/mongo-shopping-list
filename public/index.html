@@ -15,7 +15,7 @@
 <header>
 	<div>
 		<img src="images/zombie.png" alt="zombie" height="64" width="64">
-		<h1>Shopping List</h1>
+		<h1>Zombie Todo List</h1>
 		<img src="images/cart.jpg" alt="shopping-cart" height="64" width="64">
 	</div>
 	<div>
@@ -30,7 +30,7 @@
 </section>
 
 <section id="list-section">
-	<div>
+	<!-- <div>
 		<ul id="list">
 			<li class="list-item">
 				<img class="check" src="images/checkbox.gif" height="16" width="16">
@@ -58,21 +58,27 @@
 				<img class="remove" src="images/remove-x.gif" height="16" width="16">
 			</li>
 		</ul>
-	</div>
+	</div> -->
 </section>
 
 <!-- Handlebars templates -->
 <script id="item-list-template" type="text/x-handlebars-template">
-	<ul id="list">
-		{{#each items}}
-			<li class="list-item">
-				<img class="check" src="images/checkbox.gif" height="16" width="16">
-				<p>{{item}}</p>
-				<img class="remove" src="images/remove-x.gif" height="16" width="16">
-			</li>
-		{{/each}}
-	</li>
+	<div>
+		<ul id="list">
+			{{#each items}}
+				<li class="list-item" data-id="{{_id}}">
+					<img class="check" src="images/checkbox.gif" height="16" width="16">
+					<p>{{this.name}}</p>
+					<img class="remove" src="images/remove-x.gif" height="16" width="16">
+				</li>
+			{{/each}}
+		</ul>
+	</div>
 </script>
+
+
+
+
 
 
 
