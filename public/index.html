@@ -19,7 +19,7 @@
 		<img src="images/cart.jpg" alt="shopping-cart" height="64" width="64">
 	</div>
 	<div>
-		<h2>Helping you stock up for the zombie apocalypse, since 2016</h2>
+		<h2>Helping you prepare for the zombie apocalypse, since 2016</h2>
 	</div>
 </header>
 
@@ -30,22 +30,21 @@
 </section>
 
 <section id="list-section">
-
+	<div>
+		<ul id="list">
+		</ul>
+	</div>
 </section>
 
 <!-- Handlebars templates -->
 <script id="item-list-template" type="text/x-handlebars-template">
-	<div>
-		<ul id="list">
-			{{#each items}}
-				<li class="list-item" data-id="{{_id}}">
-					<img class="check" src="images/checkbox.gif" height="16" width="16">
-					<p>{{this.name}}</p>
-					<img class="remove" src="images/remove-x.gif" height="16" width="16">
-				</li>
-			{{/each}}
-		</ul>
-	</div>
+	{{#each items}}
+		<li class="list-item" data-id="{{id}}{{_id}}">
+			<img class="check" src="images/checkbox.gif" height="16" width="16">
+			<p>{{this.name}}</p>
+			<img class="remove" src="images/remove-x.gif" height="16" width="16">
+		</li>
+	{{/each}}
 </script>
 
 <footer>

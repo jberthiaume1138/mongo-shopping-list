@@ -40,8 +40,12 @@ TodoList.prototype.updateItem = function() {
 
 };
 
-TodoList.prototype.deleteItem = function() {
-
+TodoList.prototype.deleteItem = function(id) {
+	var ajax = $.ajax('/items/' + id, {
+        type: 'DELETE',
+        dataType: 'json'
+    });
+    ajax.done(this.getItems.bind(this));
 };
 
 TodoList.prototype.processData = function(data) {
@@ -59,7 +63,7 @@ TodoList.prototype.updateItemsView = function() {
 
 	var html = template(context);
 
-	$('#list-section').html(html);
+	$('#list').html(html);
 };
 
 
@@ -83,7 +87,7 @@ $(document).ready(function() {
 	$('#input-item').keydown(function(event) {
 		if (event.keyCode == 13) {
 			addItem($('#input-item').val().trim());
-			$('#input-item').val(""); //clear out box for next item
+			$('#input-item').val('');
 		}
 	});
 
@@ -93,9 +97,19 @@ $(document).ready(function() {
 	});
 
 	// permanently remove an item
-	$('#list').on('click','.remove',function() {
-		$(this).closest('li').hide();
+	// $('#list').on('click','.remove',function() {
+	// 	var id = $(this).closest('li').data('id');
+	// 	console.log('delete button pushed');
+	// 	console.log(id);
+	// 	list.deleteItem(id);
+	// });
+
+	$('#list').on('click','.remove', function() {
+		var id = $(this).closest('li').data('id');
+		// console.log(id);
+		list.deleteItem(id);
 	});
+
 
 	//reset the list - display warning
 	$('#button-clear').click(function() {
