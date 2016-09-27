@@ -11,12 +11,6 @@ TodoList.prototype.getItems = function() {
 			console.log('Error reading data.');
 			console.log(error);
 		})
-		// .done(function(data) {
-		// 	console.log(this);
-		// 	console.log(data);
-		// 	return(data);
-		// 	// processData(data).bind(this)
-		// });
 		.done(this.processData.bind(this));
 };
 
@@ -36,8 +30,15 @@ TodoList.prototype.addItem = function(name) {
 		.done(this.getItems.bind(this));
 };
 
-TodoList.prototype.updateItem = function() {
-
+TodoList.prototype.editItem = function(id, name) {
+	var item = {'name': name, 'id': id};
+	var ajax = $.ajax('/items/' + id, {
+		type: 'PUT',
+		data: JSON.stringify(item),
+		dataType: 'json',
+		contentType: 'application/json'
+	});
+	ajax.done(this.getItems.bind(this));
 };
 
 TodoList.prototype.deleteItem = function(id) {
@@ -69,9 +70,11 @@ TodoList.prototype.updateItemsView = function() {
 
 $(document).ready(function() {
 	var list = new TodoList();
-	list.getItems();
+	var stuff = list.getItems();
+	console.log(stuff);
 
-	$('#button-add').on('click',function() {
+	// add
+	$('#button-add').on('click', function() {
 		var newItem = $('#input-item').val().trim();
 		if (newItem.length > 0) {
 			list.addItem(newItem);
@@ -83,33 +86,49 @@ $(document).ready(function() {
 		}
 	});
 
-	// enable use of enter key to add an item
+	// enter key enable - repeated code
 	$('#input-item').keydown(function(event) {
 		if (event.keyCode == 13) {
-			addItem($('#input-item').val().trim());
-			$('#input-item').val('');
+			var newItem = $('#input-item').val().trim();
+			if (newItem.length > 0) {
+				list.addItem(newItem);
+				$('#no-input').hide();
+				$('#input-item').val('');
+			}
+			else {
+				$('#no-input').show();
+			}
 		}
 	});
+
+	// remove
+	$('#list').on('click','.remove', function() {
+		var id = $(this).closest('li').data('id');
+		list.deleteItem(id);
+	});
+
+	// edit
+	$('#list').on('dblclick','.item-name', function() {
+		$(this).parent().find('.button-save').toggle();
+	});
+
+	$('#list').on('click', '.button-save', function() {
+		var id = $(this).closest('li').data('id');
+		var name = $(this).parent().find('.item-name').val();
+
+		list.editItem(id, name);
+	});
+
+
+
 
 	// enables checking items off, or back on
 	$('#list').on('click','.check',function() {
 		$(this).closest('li').toggleClass('complete');
+
+		// must make this persist reloads
+		// status in database
 	});
-
-	// permanently remove an item
-	// $('#list').on('click','.remove',function() {
-	// 	var id = $(this).closest('li').data('id');
-	// 	console.log('delete button pushed');
-	// 	console.log(id);
-	// 	list.deleteItem(id);
-	// });
-
-	$('#list').on('click','.remove', function() {
-		var id = $(this).closest('li').data('id');
-		// console.log(id);
-		list.deleteItem(id);
-	});
-
 
 	//reset the list - display warning
 	$('#button-clear').click(function() {
@@ -138,6 +157,6 @@ function addItem (newItem) {
 	var gotIt = '<img class="check" src="images/checkbox.gif" height="16" width="16">';
 	var remove = '<img class="remove" src="images/remove-x.gif" height="16" width="16">';
 	$('#list').prepend(newListTag + gotIt + '<p>' + newItem + '</p>' + remove + '</li>');
-};
+}
 
 });

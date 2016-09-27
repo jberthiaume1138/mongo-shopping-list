@@ -130,10 +130,17 @@ header h2 {
 	width: 16px;
 }*/
 
-#list p {
+/*#list p {
 	text-align: left;
 	margin: 0 1em;
 	padding: 0;
+}*/
+
+#list input {
+	text-align: center;
+	margin: 0 1em;
+	padding: 0;
+    border: none;
 }
 
 .complete {
