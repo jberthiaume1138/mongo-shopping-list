@@ -30,8 +30,9 @@ TodoList.prototype.addItem = function(name) {
 		.done(this.getItems.bind(this));
 };
 
-TodoList.prototype.editItem = function(id, name) {
-	var item = {'name': name, 'id': id};
+TodoList.prototype.editItem = function(id, name, status) {
+	var item = {'id': id, 'name': name, 'status': status};
+	console.log(JSON.stringify(item));
 	var ajax = $.ajax('/items/' + id, {
 		type: 'PUT',
 		data: JSON.stringify(item),
@@ -70,8 +71,7 @@ TodoList.prototype.updateItemsView = function() {
 
 $(document).ready(function() {
 	var list = new TodoList();
-	var stuff = list.getItems();
-	console.log(stuff);
+	list.getItems();
 
 	// add
 	$('#button-add').on('click', function() {
@@ -113,21 +113,43 @@ $(document).ready(function() {
 	});
 
 	$('#list').on('click', '.button-save', function() {
+		var $listItem = $(this).closest('li');
+
 		var id = $(this).closest('li').data('id');
 		var name = $(this).parent().find('.item-name').val();
 
-		list.editItem(id, name);
+		var status = Boolean;
+		if ($listItem.hasClass('complete')) {
+			status = true;
+		}
+		else {
+			status = false;
+		}
+
+		$(this).parent().find('.button-save').toggle();
+
+		list.editItem(id, name, status);
 	});
 
 
+	// enables checking item status
+	$('#list').on('click','.check', function() {
+		var $listItem = $(this).closest('li');
 
+		$listItem.toggleClass('complete');
 
-	// enables checking items off, or back on
-	$('#list').on('click','.check',function() {
-		$(this).closest('li').toggleClass('complete');
+		var id = $(this).closest('li').data('id');
+		var name = $(this).parent().find('.item-name').val();
 
-		// must make this persist reloads
-		// status in database
+		var status = Boolean;
+		if ($listItem.hasClass('complete')) {
+			status = true;
+		}
+		else {
+			status = false;
+		}
+
+		list.editItem(id, name, status);
 	});
 
 	//reset the list - display warning

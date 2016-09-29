@@ -23,16 +23,16 @@ router.delete('/items/:id', function(req,res) {
         res.status(200).json({'REMOVED':item});
     }, function(err) {
         res.status(400).json(err);
-    }); 
+    });
 });
 
-router.put('/items/:id', function(req,res) {
-    Item.update(req.params.id, req.body.name, function(item) {
+router.put('/items/:id', function(req, res) {
+    Item.update(req.params.id, req.body.name, req.body.status, function(item) {
         res.status(200).json({'UPDATED':item});
     }, function(err) {
         res.status(400).json(err);
     });
-    
+
 });
 
 module.exports = router;

@@ -30,9 +30,10 @@ exports.delete = function (id, callback, errback) {
     });
 };
 
-exports.update = function (id, name, callback, errback) {
+exports.update = function (id, name, status, callback, errback) {
     var options = { new: true };
-    Item.findOneAndUpdate({_id: id}, { name: name }, options , function(err, item) {
+    var updates = { $set: {name: name, status: status} };
+    Item.findOneAndUpdate({_id: id}, updates, options, function(err, item) {
         if (err) {
             errback(err);
             return;
