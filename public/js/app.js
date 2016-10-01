@@ -3,6 +3,8 @@
 var TodoList = function() {
 	this.items = [];
 	this.data;
+	// this.source = $('#item-list-template').html();
+	this.template = Handlebars.compile($('#item-list-template').html());
 };
 
 TodoList.prototype.getItems = function() {
@@ -32,7 +34,6 @@ TodoList.prototype.addItem = function(name) {
 
 TodoList.prototype.editItem = function(id, name, status) {
 	var item = {'id': id, 'name': name, 'status': status};
-	console.log(JSON.stringify(item));
 	var ajax = $.ajax('/items/' + id, {
 		type: 'PUT',
 		data: JSON.stringify(item),
@@ -56,14 +57,15 @@ TodoList.prototype.processData = function(data) {
 };
 
 TodoList.prototype.updateItemsView = function() {
-	var source = $('#item-list-template').html();
-	var template = Handlebars.compile(source);
+	// var source = $('#item-list-template').html();
+	// var template = Handlebars.compile(source);
+	// var template = Handlebars.compile(this.source);
 
 	var context = {
         items: this.data
     };
 
-	var html = template(context);
+	var html = this.template(context);
 
 	$('#list').html(html);
 };
