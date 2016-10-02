@@ -157,6 +157,7 @@ $(document).ready(function() {
 		var $listItem = $(this).closest('li');
 
 		$listItem.toggleClass('complete');
+		$(this).parent().find('input').toggleClass('complete');
 
 		var id = $(this).closest('li').data('id');
 		var name = $(this).parent().find('.item-name').val();

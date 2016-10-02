@@ -123,24 +123,23 @@ header h2 {
 	display: flex;
 	flex-flow: row;
 	justify-content: space-between;
-	align-items: baseline;
+	align-items: center;
 }
-
-/*#list img {
-	width: 16px;
-}*/
-
-/*#list p {
-	text-align: left;
-	margin: 0 1em;
-	padding: 0;
-}*/
 
 #list input {
 	text-align: center;
 	margin: 0 1em;
 	padding: 0;
     border: none;
+    height: 1.65em;
+}
+
+#list button {
+    height: 1.50em;
+    padding: 0 0.5em;
+    line-height: 1em;
+    font-size: 1em;
+    vertical-align: middle;
 }
 
 .complete {
@@ -158,7 +157,7 @@ img.remove:hover {
 }
 
 
-/* footer stuff, including list clear */
+/* ------------ footer stuff, including list clear ------ */
 footer {
 	width: 100%;
 }

@@ -40,12 +40,15 @@
 	{{#each items}}
 		{{#if this.status}}
 			<li class="list-item complete" data-id="{{id}}{{_id}}" data-name="{{this.name}}">
+				<img class="check" src="images/checkbox.gif" height="16" width="16">
+				<input class="item-name complete" value="{{this.name}}">
+					<button class="button-save" style="display: none">Save</button>
 		{{else}}
 			<li class="list-item" data-id="{{id}}{{_id}}" data-name="{{this.name}}">
+				<img class="check" src="images/checkbox.gif" height="16" width="16">
+				<input class="item-name" value="{{this.name}}">
+					<button class="button-save" style="display: none">Save</button>
 		{{/if}}
-			<img class="check" src="images/checkbox.gif" height="16" width="16">
-			<input class="item-name" value="{{this.name}}">
-				<button class="button-save" style="display: none">Save</button>
 			<img class="remove" src="images/remove-x.gif" height="16" width="16">
 		</li>
 	{{/each}}
