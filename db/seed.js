@@ -1,9 +1,10 @@
 var Item = require('../models/item');
 
 exports.run = function(callback, errback) {
-    Item.create({name: 'Broad beans'},
-                {name: 'Tomatoes'},
-                {name: 'Peppers'}, function(err, items) {
+    Item.create({name: 'Broad beans', status: true},
+                {name: 'Tomatoes', status: false},
+                {name: 'Peppers', status: true},
+                 function(err, items) {
         if (err) {
             errback(err);
             return;
