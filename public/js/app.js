@@ -70,7 +70,7 @@ $(document).ready(function() {
 	var list = new TodoList();
 	list.getItems();
 
-	// add
+	// add new item
 	$('#button-add').on('click', function() {
 		var newItem = $('#input-item').val().trim();
 		if (newItem.length > 0) {
@@ -98,17 +98,18 @@ $(document).ready(function() {
 		}
 	});
 
-	// remove
+	// remove item
 	$('#list').on('click','.remove', function() {
 		var id = $(this).closest('li').data('id');
 		list.deleteItem(id);
 	});
 
-	// edit
-	$('#list').on('dblclick','.item-name', function() {
+	// edit item - start edit
+	list.$list.on('dblclick','.item-name', function() {
 		$(this).parent().find('.button-save').toggle();
 	});
 
+	// edit item - finish edit
 	$('#list').on('click', '.button-save', function() {
 		var $listItem = $(this).closest('li');
 
@@ -128,7 +129,7 @@ $(document).ready(function() {
 		list.editItem(id, name, status);
 	});
 
-	// enables checking item status
+	// toggle item status
 	$('#list').on('click','.check', function() {
 		console.log('check');
 		var $listItem = $(this).closest('li');
