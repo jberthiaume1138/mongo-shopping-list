@@ -105,8 +105,31 @@ $(document).ready(function() {
 	});
 
 	// edit item - start edit
-	list.$list.on('dblclick','.item-name', function() {
+	list.$list.on('dblclick', '.item-name', function() {
 		$(this).parent().find('.button-save').toggle();
+	});
+
+	$('#list').on('focus', '.item-name', function() {
+		$(this).parent().find('.button-save').toggle();
+	});
+
+	$('#list').on('blur', '.item-name', function() {
+		$(this).parent().find('.button-save').toggle();
+
+		var $listItem = $(this).closest('li');
+
+		var id = $(this).closest('li').data('id');
+		var name = $(this).parent().find('.item-name').val();
+
+		var status = Boolean;
+		if ($listItem.hasClass('complete')) {
+			status = true;
+		}
+		else {
+			status = false;
+		}
+
+		list.editItem(id, name, status);
 	});
 
 	// edit item - finish edit
@@ -131,7 +154,6 @@ $(document).ready(function() {
 
 	// toggle item status
 	$('#list').on('click','.check', function() {
-		console.log('check');
 		var $listItem = $(this).closest('li');
 
 		$listItem.toggleClass('complete');
@@ -171,12 +193,4 @@ $(document).ready(function() {
 		$('#confirm').hide();
 		$('#button-cancel').hide();
 	});
-
-function addItem (newItem) {
-	var newListTag = '<li class="list-item">';
-	var gotIt = '<img class="check" src="images/checkbox.gif" height="16" width="16">';
-	var remove = '<img class="remove" src="images/remove-x.gif" height="16" width="16">';
-	$('#list').prepend(newListTag + gotIt + '<p>' + newItem + '</p>' + remove + '</li>');
-}
-
 });
