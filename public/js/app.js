@@ -3,8 +3,8 @@
 var TodoList = function() {
 	this.items = [];
 	this.data;
-	// this.source = $('#item-list-template').html();
 	this.template = Handlebars.compile($('#item-list-template').html());
+	this.$list = $('#list');
 };
 
 TodoList.prototype.getItems = function() {
@@ -57,17 +57,12 @@ TodoList.prototype.processData = function(data) {
 };
 
 TodoList.prototype.updateItemsView = function() {
-	// var source = $('#item-list-template').html();
-	// var template = Handlebars.compile(source);
-	// var template = Handlebars.compile(this.source);
-
 	var context = {
         items: this.data
     };
 
-	var html = this.template(context);
-
-	$('#list').html(html);
+	var html = $(this.template(context));
+	this.$list.html(html);
 };
 
 
@@ -133,9 +128,9 @@ $(document).ready(function() {
 		list.editItem(id, name, status);
 	});
 
-
 	// enables checking item status
 	$('#list').on('click','.check', function() {
+		console.log('check');
 		var $listItem = $(this).closest('li');
 
 		$listItem.toggleClass('complete');

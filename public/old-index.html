@@ -172,11 +172,13 @@ ShoppingList.prototype.updateItemsView = function() {
     var context = {
         items: this.items
     };
-    // console.log(context);
+
     var itemList = $(this.itemListTemplate(context));
     this.itemList.replaceWith(itemList);
     this.itemList = itemList;
 };
+
+
 $(document).ready(function() {
     var app = new ShoppingList();
 });
