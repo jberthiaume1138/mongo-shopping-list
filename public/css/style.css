@@ -132,6 +132,7 @@ header h2 {
 	padding: 0;
     border: none;
     height: 1.65em;
+    min-width: 10em;
 }
 
 #list button {
@@ -165,6 +166,11 @@ footer {
 #clear {
 	margin: 0 auto;
 	text-align: center;
+    padding-top: 1em;
+}
+
+#clear p {
+    font-size: 0.80em;
 }
 
 #confirm {
@@ -203,5 +209,11 @@ footer {
 @media only screen and (max-width: 400px) {
  	header img {
 		display: none;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+ 	header h1 {
+		font-size: 1.75em;
 	}
 }
