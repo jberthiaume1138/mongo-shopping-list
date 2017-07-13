@@ -22,12 +22,11 @@ var UserSchema = new mongoose.Schema({
         require: true
     },
     items: {
-        [ItemSchema]
+        ItemSchema
     }
-
 });
 
-// var Item = mongoose.model('Item', ItemSchema);
+var Item = mongoose.model('Item', ItemSchema);
 
 var User = mongoose.model('User', UserSchema);
 
