@@ -32,7 +32,12 @@ exports.delete = function (id, callback, errback) {
 
 exports.update = function (id, name, status, callback, errback) {
     var options = { new: true };
-    var updates = { $set: {name: name, status: status} };
+    var updates = {
+        $set: {
+            name: name,
+            status: status
+        } 
+    };
     Item.findOneAndUpdate({_id: id}, updates, options, function(err, item) {
         if (err) {
             errback(err);
